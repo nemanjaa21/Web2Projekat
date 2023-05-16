@@ -8,8 +8,11 @@
         public int Kolicina { get; set; }
         public string Opis { get; set; }
         public byte[] SlikaArtikla { get; set; }
-        public string KorisnickoIme { get; set; } //strani kljuc
+        public Prodavac Prodavac { get; set; }
+        public string KorisnickoImeProdavca { get; set; } 
         public List<PorudzbinaArtikal> PorudzbinaArtikli { get; set; }
+        public bool Obrisan { get; set; }
+
 
 
     }

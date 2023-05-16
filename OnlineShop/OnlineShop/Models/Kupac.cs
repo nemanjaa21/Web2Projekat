@@ -5,6 +5,8 @@
        
         public List<Porudzbina> Porudzbine { get; set; }
         public bool Status { get; set; }
+        public Administrator Administrator { get; set; }
+        public string ImeAdministratora { get; set; }
 
 
     }
