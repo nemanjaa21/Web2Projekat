@@ -8,15 +8,15 @@ namespace OnlineShop.Configuration
     {
         public void Configure(EntityTypeBuilder<PorudzbinaArtikal> builder)
         {
-            builder.HasKey(op => new { op.IdPorudzbine, op.IdArtikla });
+            builder.HasKey(pa => new { pa.IdPorudzbine, pa.IdArtikla });
 
-            builder.HasOne(p => p.Porudzbina)
-                .WithMany(p => p.PorudzbinaArtikli)
+            builder.HasOne(pa => pa.Porudzbina)
+                .WithMany(pa => pa.PorudzbinaArtikli)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
 
-            builder.HasOne(p => p.Artikal)
-                .WithMany(p => p.PorudzbinaArtikli)
+            builder.HasOne(pa => pa.Artikal)
+                .WithMany(pa => pa.PorudzbinaArtikli)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.NoAction);
         }
