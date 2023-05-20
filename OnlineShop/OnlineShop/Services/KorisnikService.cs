@@ -14,15 +14,12 @@ namespace OnlineShop.Services
     public class KorisnikService : IKorisnikService
     {
         private readonly IMapper imapper;
-        private readonly KorisnikRepository korisnikRepo;
-        private readonly DataContext dc;
-        private readonly MyMapper mapper;
-        public KorisnikService(IMapper m, DataContext dcc)
+        private readonly IKorisnikRepository korisnikRepo;
+       // private readonly MyMapper mapper;
+        public KorisnikService(IMapper m, IKorisnikRepository repo)
         {
             imapper = m;
-            dc = dcc;
-            mapper = new MyMapper();
-            korisnikRepo = new KorisnikRepository(dcc);
+            korisnikRepo = repo;
         }
 
         public KorisnikDTO GetUser(int token)
