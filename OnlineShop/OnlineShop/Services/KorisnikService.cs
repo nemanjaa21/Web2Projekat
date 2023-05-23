@@ -15,30 +15,32 @@ namespace OnlineShop.Services
     {
         private readonly IMapper imapper;
         private readonly IKorisnikRepository korisnikRepo;
+        private readonly IConfiguration config;
        // private readonly MyMapper mapper;
-        public KorisnikService(IMapper m, IKorisnikRepository repo)
+        public KorisnikService(IMapper m, IKorisnikRepository repo, IConfiguration config)
         {
-            imapper = m;
-            korisnikRepo = repo;
+            this.imapper = m;
+            this.korisnikRepo = repo;
+            this.config = config;
         }
 
-        public KorisnikDTO GetUser(int token)
+        public async Task<KorisnikDTO> GetUser(int token)
         {
-            Korisnik k = korisnikRepo.GetById(token);
+            Korisnik k = await korisnikRepo.GetById(token);
             if(k == null)
             {
                 return null;
             }
-            KorisnikDTO kDTO = imapper.Map<KorisnikDTO>(k);
-            return kDTO;
+            return imapper.Map<Korisnik,KorisnikDTO>(k);
+             
         }
 
-        public KorisnikDTO Register(KorisnikDTO korisnik)
+        public Task<KorisnikDTO> Register(KorisnikDTO korisnik)
         {
             throw new NotImplementedException();
         }
 
-        public KorisnikDTO Update(KorisnikDTO korisnik)
+        public Task<KorisnikDTO> Update(KorisnikDTO korisnik)
         {
             throw new NotImplementedException();
         }

@@ -1,11 +1,12 @@
-﻿using OnlineShop.DTO;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using OnlineShop.DTO;
 
 namespace OnlineShop.Common
 {
     public interface IKorisnikService
     {
-        KorisnikDTO Register(KorisnikDTO korisnik);
-        KorisnikDTO Update(KorisnikDTO korisnik);
-        KorisnikDTO GetUser(int id); // izmeni preko tokena posle
+        Task<KorisnikDTO> Register(KorisnikDTO korisnik);
+        Task<KorisnikDTO> Update(KorisnikDTO korisnik);
+        Task<KorisnikDTO> GetUser(int id); // izmeni preko tokena posle
     }
 }

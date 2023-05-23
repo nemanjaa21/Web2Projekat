@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Common;
+using OnlineShop.DTO;
 
 namespace OnlineShop.Controllers
 {
@@ -17,9 +18,15 @@ namespace OnlineShop.Controllers
 
         [HttpGet]
         [Route("getUser")]
-        public IActionResult GetUser(int id) // posle neka bude token
+        public async Task<IActionResult> GetUser(int id) // posle neka bude token
         {
-            return Ok(korisnikService.GetUser(id));
+            KorisnikDTO k = await korisnikService.GetUser(id);
+            if(k == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(k);
         }
     }
 }

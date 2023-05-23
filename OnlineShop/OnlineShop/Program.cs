@@ -16,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IKorisnikRepository, KorisnikRepository>();
+//
 builder.Services.AddScoped<IKorisnikService, KorisnikService>();
 
 builder.Services.AddDbContext<DataContext>(options =>

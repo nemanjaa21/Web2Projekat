@@ -16,17 +16,17 @@ namespace OnlineShop.Repository
             dc = dataContext;
         }
 
-        public List<Korisnik> GetAllUsers()
+        public async Task<List<Korisnik>> GetAllUsers()
         {
             List<Korisnik> korisnici = dc.Korisnici.ToList();
             return korisnici;
         }
-        public Korisnik CreateUser(Korisnik korisnik)
+        public async Task<Korisnik> CreateUser(Korisnik korisnik)
         {
             try
             {
                 dc.Korisnici.Add(korisnik);
-                dc.SaveChanges();
+                await dc.SaveChangesAsync();
                 return korisnik;
             }
             catch(Exception ex)
@@ -35,11 +35,11 @@ namespace OnlineShop.Repository
             }
         }
 
-        public Korisnik GetById(int id)
+        public async Task<Korisnik> GetById(int id)
         {
             try
             {
-                Korisnik k = dc.Korisnici.SingleOrDefault(k => k.IdKorisnika == id);
+                Korisnik? k = await dc.Korisnici.Include(k => k.Porudzbine).FirstOrDefaultAsync(k => k.IdKorisnika == id);
                 return k;
             }
             catch (Exception e)
@@ -48,12 +48,12 @@ namespace OnlineShop.Repository
             }
         }
 
-        public Korisnik UpdateUser(Korisnik korisnik)
+        public async Task<Korisnik> UpdateUser(Korisnik korisnik)
         {
             try
             {
                 dc.Korisnici.Update(korisnik);
-                dc.SaveChanges();
+                await dc.SaveChangesAsync();
                 return korisnik;
             }
             catch(DbException dbe)
@@ -62,34 +62,34 @@ namespace OnlineShop.Repository
             }
         }
 
-        public Korisnik Verifikacija(int id, string status)
+        public async Task<Korisnik> Verifikacija(int id, string status)
         {
-            Korisnik k = dc.Korisnici.Find((int)id);
+            Korisnik? k = dc.Korisnici.Find(id);
             k.Verifikovan = Enum.Parse<Verifikovan>(status);
-            dc.SaveChanges();
+            await dc.SaveChangesAsync();
             return k;
         }
 
-        public void DeleteUser(int id)
-        {
-            try
-            {
-                Korisnik k = dc.Korisnici.SingleOrDefault(k => k.IdKorisnika == id);
-                if (k != null /*&& k.TipKorisnika != TipKorisnika.Administrator*/)
-                {
-                    dc.Korisnici.Remove(k);
-                    dc.SaveChanges();
+        //public void DeleteUser(int id)
+        //{
+        //    try
+        //    {
+        //        Korisnik k = dc.Korisnici.SingleOrDefault(k => k.IdKorisnika == id);
+        //        if (k != null /*&& k.TipKorisnika != TipKorisnika.Administrator*/)
+        //        {
+        //            dc.Korisnici.Remove(k);
+        //            dc.SaveChanges();
                     
-                }
+        //        }
                 
-            }
-            catch (Exception e)
-            {
+        //    }
+        //    catch (Exception e)
+        //    {
                
-            }
+        //    }
 
 
-        }
+        //}
 
     }
 }
