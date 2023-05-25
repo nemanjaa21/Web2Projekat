@@ -8,8 +8,8 @@ namespace OnlineShop.Configuration
     {
         public void Configure(EntityTypeBuilder<Artikal> builder)
         {
-            builder.HasKey(a => a.IdArtikla);
-            builder.Property(a => a.IdArtikla).ValueGeneratedOnAdd();
+            builder.HasKey(a => a.Id);
+            builder.Property(a => a.Id).ValueGeneratedOnAdd();
             builder.Property(a => a.NazivArtikla).IsRequired();
             builder.Property(a => a.Kolicina).IsRequired();
             builder.Property(a => a.CenaArtikla).IsRequired();

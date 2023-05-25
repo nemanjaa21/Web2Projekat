@@ -4,8 +4,8 @@ namespace OnlineShop.Common
 {
     public interface IPorudzbinaRepository
     {
-        Porudzbina CreatePorudzbina(Porudzbina poruzbina);
-        List<Porudzbina> GetAll();
-        Porudzbina GetPorudzbinaById(int id);
+        Task<Porudzbina> CreatePorudzbina(Porudzbina poruzbina);
+        Task<List<Porudzbina>> GetAll();
+        Task<Porudzbina> GetPorudzbinaById(int id);
     }
 }

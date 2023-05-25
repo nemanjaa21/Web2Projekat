@@ -4,10 +4,10 @@ namespace OnlineShop.Common
 {
     public interface IArtikalRepository
     {
-        Artikal CreateArtical(Artikal a);
-        List<Artikal> GetAllArticals();
-        Artikal GetArticalById(int id);
-        Artikal UpdateArtical(Artikal a);
-        void DeleteArtical(int id);
+        Task<Artikal> CreateArtical(Artikal a);
+        Task<List<Artikal>> GetAllArticals();
+        Task<Artikal> GetArticalById(int id);
+        Task<Artikal> UpdateArtical(Artikal a);
+        Task<bool> DeleteArtical(int id);
     }
 }

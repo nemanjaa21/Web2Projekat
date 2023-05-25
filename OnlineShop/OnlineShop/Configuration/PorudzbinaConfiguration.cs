@@ -8,14 +8,14 @@ namespace OnlineShop.Configuration
     {
         public void Configure(EntityTypeBuilder<Porudzbina> builder)
         {
-            builder.HasKey(p => p.IdPorudzbine);
-            builder.Property(p => p.IdPorudzbine).ValueGeneratedOnAdd();
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.Adresa).IsRequired();
 
             builder.HasOne(p => p.Korisnik)
                 .WithMany(p => p.Porudzbine)
                 .HasForeignKey(p => p.IdKorisnika)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

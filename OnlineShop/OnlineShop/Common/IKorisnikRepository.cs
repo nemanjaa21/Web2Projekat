@@ -9,7 +9,7 @@ namespace OnlineShop.Common
         Task<Korisnik> CreateUser(Korisnik korisnik);
         Task<List<Korisnik>> GetAllUsers();
         Task<Korisnik> UpdateUser(Korisnik korisnik);
-        Task<Korisnik> Verifikacija(int id, string status);
+        Task<Korisnik> Verifikacija(int id, Verifikovan status);
 
        
     }

@@ -24,11 +24,11 @@ namespace OnlineShop.Migrations
 
             modelBuilder.Entity("OnlineShop.Models.Artikal", b =>
                 {
-                    b.Property<int>("IdArtikla")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdArtikla"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CenaArtikla")
                         .HasColumnType("int");
@@ -47,14 +47,12 @@ namespace OnlineShop.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Opis")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("SlikaArtikla")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
-                    b.HasKey("IdArtikla");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdKorisnika");
 
@@ -63,24 +61,25 @@ namespace OnlineShop.Migrations
 
             modelBuilder.Entity("OnlineShop.Models.Korisnik", b =>
                 {
-                    b.Property<int>("IdKorisnika")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdKorisnika"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Adresa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DatumRodjenja")
+                    b.Property<DateTime?>("DatumRodjenja")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImeIPrezime")
+                    b.Property<string>("Ime")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -94,17 +93,23 @@ namespace OnlineShop.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<byte[]>("SlikaKorisnika")
+                    b.Property<string>("Prezime")
                         .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<byte[]>("SlikaKorisnika")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("TipKorisnika")
-                        .HasColumnType("int");
+                    b.Property<string>("TipKorisnika")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Verifikovan")
-                        .HasColumnType("int");
+                    b.Property<string>("Verifikovan")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdKorisnika");
+                    b.HasKey("Id");
 
                     b.HasIndex("KorisnickoIme")
                         .IsUnique();
@@ -114,11 +119,11 @@ namespace OnlineShop.Migrations
 
             modelBuilder.Entity("OnlineShop.Models.Porudzbina", b =>
                 {
-                    b.Property<int>("IdPorudzbine")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPorudzbine"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Adresa")
                         .IsRequired()
@@ -131,12 +136,10 @@ namespace OnlineShop.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Komentar")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("VremeDostave")
                         .HasColumnType("datetime2");
@@ -144,7 +147,7 @@ namespace OnlineShop.Migrations
                     b.Property<DateTime>("VremePorudzbine")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IdPorudzbine");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdKorisnika");
 
@@ -159,15 +162,20 @@ namespace OnlineShop.Migrations
                     b.Property<int>("IdArtikla")
                         .HasColumnType("int");
 
+                    b.Property<int>("ArtikalId")
+                        .HasColumnType("int");
+
                     b.Property<int>("KolicinaArtikla")
                         .HasColumnType("int");
 
-                    b.Property<int>("UkupnaCenaArtikala")
+                    b.Property<int>("PorudzbinaId")
                         .HasColumnType("int");
 
                     b.HasKey("IdPorudzbine", "IdArtikla");
 
-                    b.HasIndex("IdArtikla");
+                    b.HasIndex("ArtikalId");
+
+                    b.HasIndex("PorudzbinaId");
 
                     b.ToTable("PorudzbineArtikli");
                 });
@@ -188,7 +196,7 @@ namespace OnlineShop.Migrations
                     b.HasOne("OnlineShop.Models.Korisnik", "Korisnik")
                         .WithMany("Porudzbine")
                         .HasForeignKey("IdKorisnika")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Korisnik");
@@ -198,14 +206,14 @@ namespace OnlineShop.Migrations
                 {
                     b.HasOne("OnlineShop.Models.Artikal", "Artikal")
                         .WithMany("PorudzbinaArtikli")
-                        .HasForeignKey("IdArtikla")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("ArtikalId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("OnlineShop.Models.Porudzbina", "Porudzbina")
                         .WithMany("PorudzbinaArtikli")
-                        .HasForeignKey("IdPorudzbine")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("PorudzbinaId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Artikal");

@@ -10,15 +10,18 @@ namespace OnlineShop.Configuration
         {
             builder.HasKey(pa => new { pa.IdPorudzbine, pa.IdArtikla });
 
+
+
             builder.HasOne(pa => pa.Porudzbina)
                 .WithMany(pa => pa.PorudzbinaArtikli)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.HasOne(pa => pa.Artikal)
                 .WithMany(pa => pa.PorudzbinaArtikli)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -18,8 +18,15 @@ namespace OnlineShop.Repository
 
         public async Task<List<Korisnik>> GetAllUsers()
         {
-            List<Korisnik> korisnici = dc.Korisnici.ToList();
-            return korisnici;
+            try
+            {
+                List<Korisnik> korisnici = await dc.Korisnici.ToListAsync();
+                return korisnici;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
         public async Task<Korisnik> CreateUser(Korisnik korisnik)
         {
@@ -39,7 +46,7 @@ namespace OnlineShop.Repository
         {
             try
             {
-                Korisnik? k = await dc.Korisnici.Include(k => k.Porudzbine).FirstOrDefaultAsync(k => k.IdKorisnika == id);
+                Korisnik? k = await dc.Korisnici.Include(k => k.Porudzbine).FirstOrDefaultAsync(k => k.Id == id);
                 return k;
             }
             catch (Exception e)
@@ -62,10 +69,10 @@ namespace OnlineShop.Repository
             }
         }
 
-        public async Task<Korisnik> Verifikacija(int id, string status)
+        public async Task<Korisnik> Verifikacija(int id, Verifikovan status)
         {
             Korisnik? k = dc.Korisnici.Find(id);
-            k.Verifikovan = Enum.Parse<Verifikovan>(status);
+            k.Verifikovan = status;
             await dc.SaveChangesAsync();
             return k;
         }

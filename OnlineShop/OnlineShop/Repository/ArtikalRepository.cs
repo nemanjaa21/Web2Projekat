@@ -1,4 +1,5 @@
-﻿using OnlineShop.Common;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Common;
 using OnlineShop.Data;
 using OnlineShop.Models;
 
@@ -12,12 +13,12 @@ namespace OnlineShop.Repository
             dc = dataContext;
         }
 
-        public Artikal CreateArtical(Artikal a)
+        public async Task<Artikal> CreateArtical(Artikal a)
         {
             try
             {
                 dc.Artikli.Add(a);
-                dc.SaveChanges();
+                await dc.SaveChangesAsync();
                 return a;
             }
             catch(Exception)
@@ -26,34 +27,53 @@ namespace OnlineShop.Repository
             }
         }
 
-        public void DeleteArtical(int id)
+        public async Task<bool> DeleteArtical(int id)
         {
             try
             {
-                Artikal a = dc.Artikli.SingleOrDefault(a => a.IdArtikla == id);
+                Artikal a = await dc.Artikli.FirstOrDefaultAsync(a => a.Id == id);
                 if (a != null)
                 {
                     a.Obrisan = true; // logicko brisanje
-                    dc.SaveChanges();
+                    await dc.SaveChangesAsync();
+                    return true;
                 }
+                return false;
             }
             catch (Exception)
             {
-
+                return false;
             }
         }
 
-        public List<Artikal> GetAllArticals()
-        {
-            return dc.Artikli.ToList();
-        }
-
-        public Artikal GetArticalById(int id)
+        public async Task<List<Artikal>> GetAllArticals()
         {
             try
             {
-                Artikal a = dc.Artikli.SingleOrDefault(a => a.IdArtikla == id);
-                if (a != null)
+                List<Artikal> artikli1 = await dc.Artikli.ToListAsync();
+                List<Artikal> artikli2 = new List<Artikal>();
+                foreach (Artikal item in artikli1)
+                {
+                    if (item.Obrisan != true)
+                    {
+                        artikli2.Add(item);
+                    }
+                }
+                
+                return artikli2;
+            }
+            catch(Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Artikal> GetArticalById(int id)
+        {
+            try
+            {
+                Artikal a = await dc.Artikli.FirstOrDefaultAsync(a => a.Id == id);
+                if (a != null && a.Obrisan != true)
                 {
                     return a;
                 }
@@ -68,12 +88,12 @@ namespace OnlineShop.Repository
             }
         }
 
-        public Artikal UpdateArtical(Artikal a)
+        public async Task<Artikal> UpdateArtical(Artikal a)
         {
             try
             {
                 dc.Artikli.Update(a);
-                dc.SaveChanges();
+                await dc.SaveChangesAsync();
                 return a;
             }
             catch (Exception)
