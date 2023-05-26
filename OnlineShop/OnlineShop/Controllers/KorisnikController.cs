@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Common;
 using OnlineShop.DTO;
@@ -16,6 +17,7 @@ namespace OnlineShop.Controllers
             this.korisnikService = korisnikService;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("getUser")]
         public async Task<IActionResult> GetUser(int id) // posle neka bude token
