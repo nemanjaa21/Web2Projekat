@@ -30,5 +30,16 @@ namespace OnlineShop.Controllers
 
             return Ok(k);
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("registracija")]
+        public async Task<IActionResult> Registracija([FromBody] RegistracijaDTO registracija)
+        {
+            KorisnikDTO k = await korisnikService.Register(registracija);
+            if (k == null)
+                return BadRequest();
+            return Ok(k);
+        }
     }
 }

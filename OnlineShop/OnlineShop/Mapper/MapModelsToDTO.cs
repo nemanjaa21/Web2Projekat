@@ -8,6 +8,7 @@ namespace OnlineShop.Mapper
         public MapModelsToDTO()
         {
             CreateMap<Korisnik, KorisnikDTO>().ReverseMap(); //Kazemo mu da mapira Subject na SubjectDto i obrnuto
+            CreateMap<Korisnik, RegistracijaDTO>().ReverseMap();
         }
         
 

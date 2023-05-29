@@ -52,9 +52,13 @@ namespace OnlineShop.Services
         {
             List<Korisnik> korisnici = await korisnikRepo.GetAllUsers();
 
-            if (String.IsNullOrEmpty(registracija.Ime) || String.IsNullOrEmpty(registracija.Prezime) || String.IsNullOrEmpty(registracija.KorisnickoIme) ||
-                String.IsNullOrEmpty(registracija.Email) || String.IsNullOrEmpty(registracija.Adresa) ||
-                String.IsNullOrEmpty(registracija.Lozinka) || String.IsNullOrEmpty(registracija.PonovljenaLozinka) || String.IsNullOrEmpty(registracija.TipKorisnika.ToString()))
+            if (String.IsNullOrEmpty(registracija.Ime) || String.IsNullOrEmpty(registracija.Prezime) 
+                || String.IsNullOrEmpty(registracija.KorisnickoIme) 
+                || String.IsNullOrEmpty(registracija.Email) 
+                || String.IsNullOrEmpty(registracija.Adresa) 
+                || String.IsNullOrEmpty(registracija.Lozinka) 
+                || String.IsNullOrEmpty(registracija.PonovljenaLozinka)
+                || String.IsNullOrEmpty(registracija.TipKorisnika.ToString()))
                 throw new Exception("Morate popuniti sva polja za registraciju!");
 
             if (korisnici.Any(k => k.KorisnickoIme.Equals(registracija.KorisnickoIme)))
@@ -133,7 +137,7 @@ namespace OnlineShop.Services
             k.SlikaKorisnika = Encoding.ASCII.GetBytes(izmena.Slika);
 
             KorisnikDTO dto = imapper.Map<Korisnik, KorisnikDTO>(await korisnikRepo.UpdateUser(k));
-            dto.Slika = Encoding.Default.GetString(k.SlikaKorisnika);
+            dto.Slika = Encoding.Default.GetString(k.SlikaKorisnika); // ovde pravi problem null je
             return dto;
         }
 
