@@ -57,9 +57,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IKorisnikRepository, KorisnikRepository>();
 builder.Services.AddScoped<IArtikalRepository, ArtikalRepository>();
 builder.Services.AddScoped<IPorudzbinaRepository,PorudzbinaRepository>();
+builder.Services.AddScoped<IArtikalRepository, ArtikalRepository>();
 //
 builder.Services.AddScoped<IKorisnikService, KorisnikService>();
 builder.Services.AddScoped<ISlanjeEmailaService, SlanjeEmailaService>();
+builder.Services.AddScoped<IAutentifikacijaService, AutentifikacijaService>();
+builder.Services.AddScoped<IArtikalService, ArtikalService>();
 
 var configuration = new ConfigurationBuilder()
         .SetBasePath(builder.Environment.ContentRootPath)
@@ -85,13 +88,13 @@ builder.Services.AddAuthentication(opt => {
 {
     opt.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
         IssuerSigningKey = new SymmetricSecurityKey
-        (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+        (Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key"))),
         ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
         ValidateIssuerSigningKey = true
     };
 });
@@ -103,7 +106,7 @@ builder.Services.AddAuthorization(options =>
       .RequireAuthenticatedUser()
       .Build();
     options.AddPolicy("VerifiedUserOnly", policy =>
-              policy.RequireClaim("Verifikacija", "Odobren"));
+              policy.RequireClaim("Verification", "Odobren"));
 });
 
 
@@ -124,6 +127,11 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//});
 
 app.MapControllers();
 

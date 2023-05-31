@@ -52,11 +52,11 @@ namespace OnlineShop.Services
         {
             List<Korisnik> korisnici = await korisnikRepo.GetAllUsers();
 
-            if (String.IsNullOrEmpty(registracija.Ime) || String.IsNullOrEmpty(registracija.Prezime) 
-                || String.IsNullOrEmpty(registracija.KorisnickoIme) 
-                || String.IsNullOrEmpty(registracija.Email) 
-                || String.IsNullOrEmpty(registracija.Adresa) 
-                || String.IsNullOrEmpty(registracija.Lozinka) 
+            if (String.IsNullOrEmpty(registracija.Ime) || String.IsNullOrEmpty(registracija.Prezime)
+                || String.IsNullOrEmpty(registracija.KorisnickoIme)
+                || String.IsNullOrEmpty(registracija.Email)
+                || String.IsNullOrEmpty(registracija.Adresa)
+                || String.IsNullOrEmpty(registracija.Lozinka)
                 || String.IsNullOrEmpty(registracija.PonovljenaLozinka)
                 || String.IsNullOrEmpty(registracija.TipKorisnika.ToString()))
                 throw new Exception("Morate popuniti sva polja za registraciju!");
@@ -71,8 +71,12 @@ namespace OnlineShop.Services
                 throw new Exception("Lozinke se ne poklapaju! Unesite lozinke ponovo.");
 
             Korisnik k1 = imapper.Map<RegistracijaDTO, Korisnik>(registracija);
-            k1.SlikaKorisnika = Encoding.ASCII.GetBytes(registracija.Slika);
+
+            //k1.SlikaKorisnika = Encoding.ASCII.GetBytes(registracija.SlikaKorisnika);7
+            k1.SlikaKorisnika = registracija.SlikaKorisnika;
+
             k1.Lozinka = BCrypt.Net.BCrypt.HashPassword(k1.Lozinka);
+
 
             if (k1.TipKorisnika == TipKorisnika.Prodavac)
                 k1.Verifikovan = Verifikovan.UProcesu;
@@ -80,9 +84,13 @@ namespace OnlineShop.Services
                 k1.Verifikovan = Verifikovan.Prihvacen;
 
             KorisnikDTO dto = imapper.Map<Korisnik, KorisnikDTO>(await korisnikRepo.CreateUser(k1));
-            dto.Slika = Encoding.Default.GetString(k1.SlikaKorisnika);
+
+            //dto.SlikaKorisnika = Encoding.Default.GetString(k1.SlikaKorisnika);
+            dto.SlikaKorisnika = k1.SlikaKorisnika;
+
             return dto;
         }
+        
 
         public async Task<KorisnikDTO> Update(int id,IzmenaDTO izmena)
         {
@@ -132,12 +140,13 @@ namespace OnlineShop.Services
                 izmena.Lozinka = k.Lozinka;
 
             imapper.Map(izmena, k);
-            
 
-            k.SlikaKorisnika = Encoding.ASCII.GetBytes(izmena.Slika);
+            k.SlikaKorisnika = izmena.SlikaKorisnika;
+           // k.SlikaKorisnika = Encoding.ASCII.GetBytes(izmena.Slika);
 
             KorisnikDTO dto = imapper.Map<Korisnik, KorisnikDTO>(await korisnikRepo.UpdateUser(k));
-            dto.Slika = Encoding.Default.GetString(k.SlikaKorisnika); // ovde pravi problem null je
+            // dto.SlikaKorisnika = Encoding.Default.GetString(k.SlikaKorisnika); // ovde pravi problem null je
+            dto.SlikaKorisnika = k.SlikaKorisnika;
             return dto;
         }
 

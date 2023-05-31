@@ -10,6 +10,7 @@
         public string Prezime { get; set; }
         public DateTime DatumRodjenja { get; set; }
         public string Adresa { get; set; }
-        public string Slika { get; set; }
+        public byte[]? SlikaKorisnika { get; set; }
+       // public string SlikaKorisnika { get; set; }
     }
 }

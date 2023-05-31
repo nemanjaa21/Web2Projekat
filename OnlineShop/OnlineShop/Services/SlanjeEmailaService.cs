@@ -20,7 +20,7 @@ namespace OnlineShop.Services
             string html = "<h1>" + "Vasa verifikacija je " + verifikovan + "</h1>";
 
             var mail = new MimeMessage();
-            mail.From.Add(new MailboxAddress(config["Email:DisplayName"], config["Email:Address"]));
+            mail.From.Add(new MailboxAddress(config.GetValue<string>("MailSettings:DisplayName"), config.GetValue<string>("MailSettings:From")));
             mail.To.Add(MailboxAddress.Parse(email));
 
             mail.Subject = "Verifikacija";
@@ -30,8 +30,8 @@ namespace OnlineShop.Services
             mail.Body = builder.ToMessageBody();
 
             SmtpClient smtp = new SmtpClient();
-            await smtp.ConnectAsync(config["Email:Host"], int.Parse(config["Email:Port"]!), SecureSocketOptions.Auto);
-            await smtp.AuthenticateAsync(config["Email:Address"], config["Email:Password"]);
+            await smtp.ConnectAsync(config.GetValue<string>("MailSettings:Host"), int.Parse(config.GetValue<string>("MailSettings:Port")!), SecureSocketOptions.Auto);
+            await smtp.AuthenticateAsync(config.GetValue<string>("MailSettings:From"), config.GetValue<string>("MailSettings:Password"));
             await smtp.SendAsync(mail);
             await smtp.DisconnectAsync(true);
 

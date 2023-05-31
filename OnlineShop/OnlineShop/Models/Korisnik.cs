@@ -6,8 +6,6 @@ namespace OnlineShop.Models
     {
         public int Id { get; set; }
 
-        public TipKorisnika TipKorisnika { get; set; }
-
         [Required(ErrorMessage = "Polje KorisnickoIme je obavezno.")]
         public string? KorisnickoIme { get; set; }
 
@@ -31,6 +29,7 @@ namespace OnlineShop.Models
         public string? Adresa { get; set; }
 
         public byte[]? SlikaKorisnika { get; set; }
+        public TipKorisnika TipKorisnika { get; set; }
 
         public List<Artikal>? Artikli { get; set; }
 

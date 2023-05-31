@@ -34,7 +34,9 @@ namespace OnlineShop.Repository
                 Artikal a = await dc.Artikli.FirstOrDefaultAsync(a => a.Id == id);
                 if (a != null)
                 {
-                    a.Obrisan = true; // logicko brisanje
+                    //fizicko brisanje
+
+                    dc.Artikli.Remove(a);
                     await dc.SaveChangesAsync();
                     return true;
                 }
@@ -54,10 +56,9 @@ namespace OnlineShop.Repository
                 List<Artikal> artikli2 = new List<Artikal>();
                 foreach (Artikal item in artikli1)
                 {
-                    if (item.Obrisan != true)
-                    {
+                    
                         artikli2.Add(item);
-                    }
+                    
                 }
                 
                 return artikli2;
@@ -73,7 +74,7 @@ namespace OnlineShop.Repository
             try
             {
                 Artikal a = await dc.Artikli.FirstOrDefaultAsync(a => a.Id == id);
-                if (a != null && a.Obrisan != true)
+                if (a != null)
                 {
                     return a;
                 }
