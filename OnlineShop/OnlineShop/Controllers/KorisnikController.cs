@@ -45,7 +45,7 @@ namespace OnlineShop.Controllers
 
         [HttpPut("Verifikacija/{id}/{secondParam}")]
         //[Authorize(Roles = "Administrator")]
-        [AllowAnonymous]
+        [AllowAnonymous] // obrisi posle
         public async Task<IActionResult> Verifikacija(int id,bool secondParam)
         {
             KorisnikDTO korisnik = await korisnikService.Verifikacija(id, Verifikovan.UProcesu);
