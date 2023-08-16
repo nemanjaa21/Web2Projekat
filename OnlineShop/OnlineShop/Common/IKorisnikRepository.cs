@@ -8,9 +8,11 @@ namespace OnlineShop.Common
         Task<Korisnik> GetById(int id);
         Task<Korisnik> CreateUser(Korisnik korisnik);
         Task<List<Korisnik>> GetAllUsers();
+        Task<List<Korisnik>> DobaviSveProdavce();
         Task<Korisnik> UpdateUser(Korisnik korisnik);
-        Task<Korisnik> Verifikacija(int id, Verifikovan status);
+        Task<Korisnik> PrihvatiVer(int id);
+        Task<Korisnik> OdbijVer(int id);
 
-       
+
     }
 }

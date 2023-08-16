@@ -9,9 +9,11 @@ namespace OnlineShop.Common
     {
         Task<KorisnikDTO> Register(RegistracijaDTO registracija);
         Task<KorisnikDTO> Update(int id, IzmenaDTO izmena);
-        Task<KorisnikDTO> GetUser(int id); // izmeni preko tokena posle
+        Task<KorisnikDTO> GetUser(int id);
         Task<List<KorisnikDTO>> GetAll();
-        Task<KorisnikDTO> Verifikacija(int id, Verifikovan verifikovan);
-
+        Task<KorisnikDTO> PrihvatiVerifikaciju(int id);
+        Task<KorisnikDTO> OdbijVerifikaciju(int id);
+        Task<List<VerifikacijaKorisnikaDTO>> DobaviSveProdavce();
     }
 }
+

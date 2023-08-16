@@ -18,7 +18,7 @@ namespace OnlineShop.Models
         public List<PorudzbinaArtikal>? PorudzbinaArtikli { get; set; }
         public Korisnik? Korisnik { get; set; }
         public int IdKorisnika { get; set; }
-       // public bool Obrisan { get; set; } // obrisi ovo
+        public bool Obrisan { get; set; } 
 
 
     }

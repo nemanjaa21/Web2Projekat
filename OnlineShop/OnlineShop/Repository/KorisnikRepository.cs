@@ -28,6 +28,18 @@ namespace OnlineShop.Repository
                 return null;
             }
         }
+        public async Task<List<Korisnik>> DobaviSveProdavce()
+        {
+            try
+            {
+                List<Korisnik> prodavci = dc.Korisnici.Include(k => k.Artikli).Where(p => p.TipKorisnika == TipKorisnika.Prodavac).ToList();
+                return prodavci;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
         public async Task<Korisnik> CreateUser(Korisnik korisnik)
         {
             try
@@ -69,12 +81,34 @@ namespace OnlineShop.Repository
             }
         }
 
-        public async Task<Korisnik> Verifikacija(int id, Verifikovan status)
+        public async Task<Korisnik> PrihvatiVer(int id)
         {
-            Korisnik? k = dc.Korisnici.Find(id);
-            k.Verifikovan = status;
-            await dc.SaveChangesAsync();
-            return k;
+            try
+            {
+                Korisnik? k = dc.Korisnici.Find((int)id);
+                k.Verifikovan = Verifikovan.Prihvacen;
+                await dc.SaveChangesAsync();
+                return k;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        public async Task<Korisnik> OdbijVer(int id)
+        {
+            try
+            {
+                Korisnik? k = dc.Korisnici.Find((int)id);
+                k.Verifikovan = Verifikovan.Odbijen;
+                await dc.SaveChangesAsync();
+                return k;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         //public void DeleteUser(int id)
@@ -86,13 +120,13 @@ namespace OnlineShop.Repository
         //        {
         //            dc.Korisnici.Remove(k);
         //            dc.SaveChanges();
-                    
+
         //        }
-                
+
         //    }
         //    catch (Exception e)
         //    {
-               
+
         //    }
 
 

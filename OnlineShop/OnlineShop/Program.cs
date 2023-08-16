@@ -57,7 +57,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddScoped<IKorisnikRepository, KorisnikRepository>();
 builder.Services.AddScoped<IArtikalRepository, ArtikalRepository>();
 builder.Services.AddScoped<IPorudzbinaRepository,PorudzbinaRepository>();
-builder.Services.AddScoped<IArtikalRepository, ArtikalRepository>();
+
 //
 builder.Services.AddScoped<IKorisnikService, KorisnikService>();
 builder.Services.AddScoped<ISlanjeEmailaService, SlanjeEmailaService>();
@@ -93,8 +93,8 @@ builder.Services.AddAuthentication(opt => {
         IssuerSigningKey = new SymmetricSecurityKey
         (Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key"))),
         ValidateIssuer = true,
-        ValidateAudience = false,
-        ValidateLifetime = true,
+        ValidateAudience = true,
+        ValidateLifetime = false,
         ValidateIssuerSigningKey = true
     };
 });
@@ -106,7 +106,7 @@ builder.Services.AddAuthorization(options =>
       .RequireAuthenticatedUser()
       .Build();
     options.AddPolicy("VerifiedUserOnly", policy =>
-              policy.RequireClaim("Verification", "Odobren"));
+              policy.RequireClaim("Verification", "Prihvacen"));
 });
 
 

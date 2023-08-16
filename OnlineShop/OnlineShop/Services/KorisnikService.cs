@@ -26,6 +26,13 @@ namespace OnlineShop.Services
             this.email = email;
         }
 
+        public async Task<List<VerifikacijaKorisnikaDTO>> DobaviSveProdavce()
+        {
+            List<Korisnik> korisnici = await korisnikRepo.DobaviSveProdavce();
+            if (korisnici == null)
+                throw new Exception($"There are no users!");
+            return imapper.Map<List<Korisnik>, List<VerifikacijaKorisnikaDTO>>(korisnici);
+        }
 
         public async Task<List<KorisnikDTO>> GetAll()
         {
@@ -46,6 +53,38 @@ namespace OnlineShop.Services
             }
             return imapper.Map<Korisnik,KorisnikDTO>(k);
              
+        }
+
+        public async Task<KorisnikDTO> OdbijVerifikaciju(int id)
+        {
+            Korisnik u = await korisnikRepo.GetById(id);
+            if (u == null)
+                throw new Exception($"User with ID: {id} doesn't exist.");
+            if (u.Verifikovan != Models.Verifikovan.UProcesu)
+                throw new Exception($"Cant change verification anymore!");
+
+            u = await korisnikRepo.OdbijVer(id);
+            if (u != null)
+            {
+                email.EmailObavestenje(u.Email, u.Verifikovan.ToString());
+            }
+            return imapper.Map<Korisnik, KorisnikDTO>(u);
+        }
+
+        public async Task<KorisnikDTO> PrihvatiVerifikaciju(int id)
+        {
+            Korisnik u = await korisnikRepo.GetById(id);
+            if (u == null)
+                throw new Exception($"User with ID: {id} doesn't exist.");
+            if (u.Verifikovan != Models.Verifikovan.UProcesu)
+                throw new Exception($"Cant change verification anymore!");
+
+            u = await korisnikRepo.PrihvatiVer(id);
+            if (u != null)
+            {
+                await email.EmailObavestenje(u.Email, u.Verifikovan.ToString());
+            }
+            return imapper.Map<Korisnik, KorisnikDTO>(u);
         }
 
         public async Task<KorisnikDTO> Register(RegistracijaDTO registracija)
@@ -72,11 +111,17 @@ namespace OnlineShop.Services
 
             Korisnik k1 = imapper.Map<RegistracijaDTO, Korisnik>(registracija);
 
-            //k1.SlikaKorisnika = Encoding.ASCII.GetBytes(registracija.SlikaKorisnika);7
-            k1.SlikaKorisnika = registracija.SlikaKorisnika;
-
+            if (registracija.SlikaKorisnika != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    registracija.SlikaKorisnika.CopyTo(memoryStream);
+                    var imageBytes = memoryStream.ToArray();
+                    k1.SlikaKorisnika = imageBytes;
+                }
+            }
             k1.Lozinka = BCrypt.Net.BCrypt.HashPassword(k1.Lozinka);
-
+            k1.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), registracija.TipKorisnika.ToUpper());
 
             if (k1.TipKorisnika == TipKorisnika.Prodavac)
                 k1.Verifikovan = Verifikovan.UProcesu;
@@ -84,10 +129,6 @@ namespace OnlineShop.Services
                 k1.Verifikovan = Verifikovan.Prihvacen;
 
             KorisnikDTO dto = imapper.Map<Korisnik, KorisnikDTO>(await korisnikRepo.CreateUser(k1));
-
-            //dto.SlikaKorisnika = Encoding.Default.GetString(k1.SlikaKorisnika);
-            dto.SlikaKorisnika = k1.SlikaKorisnika;
-
             return dto;
         }
         
@@ -150,20 +191,6 @@ namespace OnlineShop.Services
             return dto;
         }
 
-        public async Task<KorisnikDTO> Verifikacija(int id, Verifikovan verifikovan)
-        {
-            Korisnik k = await korisnikRepo.GetById(id);
-            if (k == null)
-                throw new Exception($"Korisnik sa ID: {id} ne postoji.");
-            if (k.Verifikovan != Verifikovan.UProcesu)
-                throw new Exception($"Ne moze se vise promeniti verifikacija.");
-
-            k = await korisnikRepo.Verifikacija(id, verifikovan);
-            if (k != null)
-                await email.EmailObavestenje(k.Verifikovan.ToString(),k.Email);
-
-            return imapper.Map<Korisnik, KorisnikDTO>(k);
-
-        }
+        
     }
 }

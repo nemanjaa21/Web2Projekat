@@ -13,11 +13,12 @@ namespace OnlineShop.Configuration
             builder.Property(a => a.NazivArtikla).IsRequired();
             builder.Property(a => a.Kolicina).IsRequired();
             builder.Property(a => a.CenaArtikla).IsRequired();
+            builder.Property(a => a.Obrisan).HasDefaultValue(false);
 
             builder.HasOne(a => a.Korisnik)
                 .WithMany(a => a.Artikli)
                 .HasForeignKey(a => a.IdKorisnika)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
