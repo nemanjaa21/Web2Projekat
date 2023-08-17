@@ -52,5 +52,10 @@ namespace OnlineShop.Repository
                 return null;
             }
         }
+
+        public async Task SaveChanges()
+        {
+            await dc.SaveChangesAsync();
+        }
     }
 }

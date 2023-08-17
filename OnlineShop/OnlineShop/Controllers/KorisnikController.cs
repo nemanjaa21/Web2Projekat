@@ -18,60 +18,84 @@ namespace OnlineShop.Controllers
             this.korisnikService = korisnikService;
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("getUser")]
-        public async Task<IActionResult> GetUser(int id) // posle neka bude token
+        //GET api/user/GetAllUsers
+        [HttpGet("get-all-users")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetAllUsers()
         {
+            List<KorisnikDTO> korisnici = await korisnikService.GetAll();
+            if (korisnici == null)
+                return BadRequest();
+            return Ok(korisnici);
+        }
+
+        //GET api/user
+        [Authorize]
+        [HttpGet("get-my-profile")]
+        public async Task<IActionResult> GetMyProfile()
+        {
+            int id = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
             KorisnikDTO k = await korisnikService.GetUser(id);
             if (k == null)
-            {
                 return BadRequest();
-            }
-
             return Ok(k);
         }
+
+        [HttpGet("get-all-salesmans")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetAllSalesmans()
+        {
+            List<VerifikacijaKorisnikaDTO> prodavci = await korisnikService.DobaviSveProdavce();
+            if (prodavci == null)
+                return BadRequest();
+            return Ok(prodavci);
+        }
+
 
         [HttpPost]
+        [Consumes("multipart/form-data")] // jer ce forma da sadrzi fajl
         [AllowAnonymous]
-        [Route("registracija")]
-        public async Task<IActionResult> Registracija([FromBody] RegistracijaDTO registracija)
+        public async Task<IActionResult> Post([FromForm] RegistracijaDTO registerDto)
         {
-            KorisnikDTO k = await korisnikService.Register(registracija);
-            if (k == null)
+            KorisnikDTO user = await korisnikService.Register(registerDto);
+            if (user == null)
                 return BadRequest();
-            return Ok(k);
+            return Ok(user);
         }
 
-        [HttpPut("Verifikacija/{id}/{secondParam}")]
-        //[Authorize(Roles = "Administrator")]
-        [AllowAnonymous] // obrisi posle
-        public async Task<IActionResult> Verifikacija(int id,bool secondParam)
+
+        [HttpPut("accept-verification/{id}")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> AcceptVerification(int id)
         {
-            KorisnikDTO korisnik = await korisnikService.Verifikacija(id, Verifikovan.UProcesu);
-            if (secondParam)
-            {
-                 korisnik = await korisnikService.Verifikacija(id, Verifikovan.Prihvacen);
-            }
-            else
-            {
-                 korisnik = await korisnikService.Verifikacija(id, Verifikovan.Odbijen);
-            }
-            if (korisnik is null)
+            KorisnikDTO user = await korisnikService.PrihvatiVerifikaciju(id);
+            if (user == null)
                 return BadRequest();
-            return Ok(korisnik);
+            return Ok(user);
         }
 
-        //[HttpPut]
-        //[Authorize]
-        //public async Task<IActionResult> Put(IzmenaDTO profile)
-        //{
-        //    int id = int.Parse(Korisnik.Claims.First(k => k.Type == "UserId").Value);
-        //    KorisnikDTO korisnik = await korisnikService.Update(id, profile);
-        //    if (korisnik is null)
-        //        return BadRequest();
-        //    return Ok(korisnik);
-        //}
+        [HttpPut]
+        [Consumes("multipart/form-data")]
+        [Authorize]
+        public async Task<IActionResult> Put([FromForm] IzmenaDTO profileDto)
+        {
+            int id = int.Parse(User.Claims.First(c => c.Type == "UserId").Value);
+            KorisnikDTO user = await korisnikService.Update(id, profileDto);
+            if (user == null)
+                return BadRequest();
+            return Ok(user);
+        }
+
+        [HttpPut("deny-verification/{id}")]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DenyVerification(int id)
+        {
+            KorisnikDTO user = await korisnikService.OdbijVerifikaciju(id);
+            if (user == null)
+                return BadRequest();
+            return Ok(user);
+        }
+
 
     }
 }

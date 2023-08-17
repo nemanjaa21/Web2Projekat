@@ -17,7 +17,7 @@ namespace OnlineShop.Services
         private readonly IKorisnikRepository korisnikRepo;
         private readonly IConfiguration config;
         private readonly ISlanjeEmailaService email;
-       // private readonly MyMapper mapper;
+      
         public KorisnikService(IMapper m, IKorisnikRepository repo, IConfiguration config, ISlanjeEmailaService email)
         {
             this.imapper = m;
@@ -66,7 +66,7 @@ namespace OnlineShop.Services
             u = await korisnikRepo.OdbijVer(id);
             if (u != null)
             {
-                email.EmailObavestenje(u.Email, u.Verifikovan.ToString());
+                await email.EmailObavestenje(u.Email, u.Verifikovan.ToString());
             }
             return imapper.Map<Korisnik, KorisnikDTO>(u);
         }
@@ -158,7 +158,7 @@ namespace OnlineShop.Services
                 if (String.IsNullOrEmpty(izmena.StaraLozinka))
                     throw new Exception("Morate uneti staru lozinku.");
 
-                if (!BCrypt.Net.BCrypt.Verify(izmena.StaraLozinka, k.Lozinka))
+                if (!BCrypt.Net.BCrypt.Verify(izmena.StaraLozinka, k.Lozinka.TrimEnd()))
                     throw new Exception("Stara lozinka je netacna.");
 
                 k.Lozinka = BCrypt.Net.BCrypt.HashPassword(izmena.Lozinka);
@@ -170,10 +170,6 @@ namespace OnlineShop.Services
                 if (String.IsNullOrEmpty(izmena.Lozinka))
                     throw new Exception("Morate uneti novu lozinku.");
 
-                if (!BCrypt.Net.BCrypt.Verify(izmena.StaraLozinka, k.Lozinka))
-                    throw new Exception("Stara lozinka je netacna.");
-
-                k.Lozinka = BCrypt.Net.BCrypt.HashPassword(izmena.Lozinka);
 
             }
 
@@ -181,13 +177,17 @@ namespace OnlineShop.Services
                 izmena.Lozinka = k.Lozinka;
 
             imapper.Map(izmena, k);
-
-            k.SlikaKorisnika = izmena.SlikaKorisnika;
-           // k.SlikaKorisnika = Encoding.ASCII.GetBytes(izmena.Slika);
+            if(izmena.SlikaKorisnika != null )
+            {
+                using(var memoryStream = new MemoryStream())
+                {
+                    izmena.SlikaKorisnika.CopyTo(memoryStream);
+                    var imageBytes = memoryStream.ToArray();
+                    k.SlikaKorisnika = imageBytes;
+                }
+            }
 
             KorisnikDTO dto = imapper.Map<Korisnik, KorisnikDTO>(await korisnikRepo.UpdateUser(k));
-            // dto.SlikaKorisnika = Encoding.Default.GetString(k.SlikaKorisnika); // ovde pravi problem null je
-            dto.SlikaKorisnika = k.SlikaKorisnika;
             return dto;
         }
 

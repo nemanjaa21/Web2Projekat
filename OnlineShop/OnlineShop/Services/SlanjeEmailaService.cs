@@ -17,21 +17,21 @@ namespace OnlineShop.Services
         }
         public async Task EmailObavestenje(string verifikovan, string email)
         {
-            string html = "<h1>" + "Vasa verifikacija je " + verifikovan + "</h1>";
+            string text = $"Vasa verifikacija je {verifikovan}";
+            var mail = new MimeMessage
+            {
+                Subject = "Verifikacija",
+                Body = new TextPart(MimeKit.Text.TextFormat.Plain) { Text = text }
+            };
 
-            var mail = new MimeMessage();
-            mail.From.Add(new MailboxAddress(config.GetValue<string>("MailSettings:DisplayName"), config.GetValue<string>("MailSettings:From")));
+
+            mail.From.Add(new MailboxAddress(config["MailSettings:DisplayName"], config["MailSettings:From"]));
             mail.To.Add(MailboxAddress.Parse(email));
 
-            mail.Subject = "Verifikacija";
-
-            var builder = new BodyBuilder();
-            builder.HtmlBody = html;
-            mail.Body = builder.ToMessageBody();
-
             SmtpClient smtp = new SmtpClient();
-            await smtp.ConnectAsync(config.GetValue<string>("MailSettings:Host"), int.Parse(config.GetValue<string>("MailSettings:Port")!), SecureSocketOptions.Auto);
-            await smtp.AuthenticateAsync(config.GetValue<string>("MailSettings:From"), config.GetValue<string>("MailSettings:Password"));
+            await smtp.ConnectAsync(config["MailSettings:Host"], int.Parse(config["MailSettings:Port"]!), SecureSocketOptions.Auto);
+            string s = config["MailSettings:From"] + " " + config["MailSettings:Password"];
+            await smtp.AuthenticateAsync(config["MailSettings:From"], config["MailSettings:Password"]);
             await smtp.SendAsync(mail);
             await smtp.DisconnectAsync(true);
 

@@ -19,6 +19,7 @@ namespace OnlineShop.Services
             this.korisnikRepo = korisnikRepo;
             this.imapper = imapper;
             this.config = config;
+            
         }
 
         public async Task<ArtikalDTO> Create(int id, KreiranjeArtiklaDTO artikal)
@@ -36,13 +37,20 @@ namespace OnlineShop.Services
             if (prodavac is null)
                 throw new Exception($"Prodavac sa ID-em: {id} ne postoji.");
 
-            Artikal noviArtikal = imapper.Map<KreiranjeArtiklaDTO, Artikal>(artikal);
-            //noviArtikal.SlikaArtikla = Encoding.ASCII.GetBytes(artikal.SlikaArtikla);
+            Artikal noviArtikal = imapper.Map<Artikal>(artikal);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                artikal.SlikaArtikla.CopyTo(memoryStream);
+                var imageBytes = memoryStream.ToArray();
+                noviArtikal.SlikaArtikla = imageBytes;
+            }
+
+            noviArtikal.Obrisan = false;
             noviArtikal.Korisnik = prodavac;
             noviArtikal.IdKorisnika = id;
 
             ArtikalDTO dto = imapper.Map<Artikal, ArtikalDTO>(await artikalRepo.CreateArtical(noviArtikal));
-            //dto.SlikaArtikla = Encoding.Default.GetString(noviArtikal.SlikaArtikla);
             return dto;
         }
 
@@ -59,8 +67,11 @@ namespace OnlineShop.Services
 
         public async Task<List<ArtikalDTO>> GetAllArticals()
         {
-            return imapper.Map<List<Artikal>, List<ArtikalDTO>>(await artikalRepo.GetAllArticals());
-            
+            List<Artikal> products = await artikalRepo.GetAllArticals();
+            products = products.Where(p => p.Obrisan == false).ToList();
+
+            return imapper.Map<List<Artikal>, List<ArtikalDTO>>(products);
+
         }
 
         public async Task<ArtikalDTO> GetArtikalBasedOnId(int ida)
@@ -74,7 +85,7 @@ namespace OnlineShop.Services
         public async Task<List<ArtikalDTO>> MyArticals(int idk)
         {
             List<Artikal> artikli = await artikalRepo.GetAllArticals();
-            artikli = artikli.Where(a => a.IdKorisnika == idk).ToList();
+            artikli = artikli.Where(a => a.IdKorisnika == idk && a.Obrisan == false).ToList();
             if (artikli is null)
                 throw new Exception($"Nema artikala u vasoj kolekciji.");
             List<ArtikalDTO> lista = imapper.Map<List<Artikal>, List<ArtikalDTO>>(artikli);
@@ -98,10 +109,14 @@ namespace OnlineShop.Services
                 throw new Exception($"Cena artikla i kolicina moraju biti pozitivne vrednosti!");
 
             imapper.Map(artikal, a);
-            //a.SlikaArtikla = Encoding.ASCII.GetBytes(artikal.SlikaArtikla);
+            using (var memoryStream = new MemoryStream())
+            {
+                artikal.SlikaArtikla.CopyTo(memoryStream);
+                var imageBytes = memoryStream.ToArray();
+                a.SlikaArtikla = imageBytes;
+            }
 
-            ArtikalDTO dto = imapper.Map<Artikal,ArtikalDTO>(await artikalRepo.UpdateArtical(a));
-            //dto.SlikaArtikla = Encoding.Default.GetString(a.SlikaArtikla);
+            ArtikalDTO dto = imapper.Map<Artikal, ArtikalDTO>(await artikalRepo.UpdateArtical(a));
             return dto;
         }
     }

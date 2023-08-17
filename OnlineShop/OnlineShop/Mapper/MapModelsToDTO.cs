@@ -19,7 +19,7 @@ namespace OnlineShop.Mapper
             CreateMap<Porudzbina,PorudzbinaDTO>().ReverseMap();
             CreateMap<Porudzbina, NapraviPorudzbinuDTO>().ReverseMap();
             CreateMap<PorudzbinaArtikal, PorudzbinaArtikalDTO>().ReverseMap();
-            CreateMap<PorudzbinaArtikal, NapraviPorudzbinaArtikalDTO>().ReverseMap();
+            CreateMap<PorudzbinaArtikal, NapraviPorudzbinuArtikalDTO>().ReverseMap();
 
             //za slike
             CreateMap<IFormFile, byte[]>().ConvertUsing((file, _, context) => ConvertIFormFileToByteArray(file, context));
