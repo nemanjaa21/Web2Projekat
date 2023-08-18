@@ -90,22 +90,20 @@ namespace OnlineShop.Migrations
                 {
                     IdPorudzbine = table.Column<int>(type: "int", nullable: false),
                     IdArtikla = table.Column<int>(type: "int", nullable: false),
-                    PorudzbinaId = table.Column<int>(type: "int", nullable: false),
-                    ArtikalId = table.Column<int>(type: "int", nullable: false),
                     KolicinaArtikla = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PorudzbineArtikli", x => new { x.IdPorudzbine, x.IdArtikla });
                     table.ForeignKey(
-                        name: "FK_PorudzbineArtikli_Artikli_ArtikalId",
-                        column: x => x.ArtikalId,
+                        name: "FK_PorudzbineArtikli_Artikli_IdPorudzbine",
+                        column: x => x.IdPorudzbine,
                         principalTable: "Artikli",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PorudzbineArtikli_Porudzbine_PorudzbinaId",
-                        column: x => x.PorudzbinaId,
+                        name: "FK_PorudzbineArtikli_Porudzbine_IdArtikla",
+                        column: x => x.IdArtikla,
                         principalTable: "Porudzbine",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -128,14 +126,9 @@ namespace OnlineShop.Migrations
                 column: "IdKorisnika");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PorudzbineArtikli_ArtikalId",
+                name: "IX_PorudzbineArtikli_IdArtikla",
                 table: "PorudzbineArtikli",
-                column: "ArtikalId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PorudzbineArtikli_PorudzbinaId",
-                table: "PorudzbineArtikli",
-                column: "PorudzbinaId");
+                column: "IdArtikla");
         }
 
         /// <inheritdoc />

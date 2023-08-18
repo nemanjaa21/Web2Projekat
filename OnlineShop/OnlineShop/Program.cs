@@ -63,6 +63,7 @@ builder.Services.AddScoped<IKorisnikService, KorisnikService>();
 builder.Services.AddScoped<ISlanjeEmailaService, SlanjeEmailaService>();
 builder.Services.AddScoped<IAutentifikacijaService, AutentifikacijaService>();
 builder.Services.AddScoped<IArtikalService, ArtikalService>();
+builder.Services.AddScoped<IPorudzbinaService, PorudzbinaService>();
 
 var configuration = new ConfigurationBuilder()
         .SetBasePath(builder.Environment.ContentRootPath)

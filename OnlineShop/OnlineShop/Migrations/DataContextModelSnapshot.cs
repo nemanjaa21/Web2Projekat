@@ -167,20 +167,12 @@ namespace OnlineShop.Migrations
                     b.Property<int>("IdArtikla")
                         .HasColumnType("int");
 
-                    b.Property<int>("ArtikalId")
-                        .HasColumnType("int");
-
                     b.Property<int>("KolicinaArtikla")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PorudzbinaId")
                         .HasColumnType("int");
 
                     b.HasKey("IdPorudzbine", "IdArtikla");
 
-                    b.HasIndex("ArtikalId");
-
-                    b.HasIndex("PorudzbinaId");
+                    b.HasIndex("IdArtikla");
 
                     b.ToTable("PorudzbineArtikli");
                 });
@@ -209,15 +201,15 @@ namespace OnlineShop.Migrations
 
             modelBuilder.Entity("OnlineShop.Models.PorudzbinaArtikal", b =>
                 {
-                    b.HasOne("OnlineShop.Models.Artikal", "Artikal")
+                    b.HasOne("OnlineShop.Models.Porudzbina", "Porudzbina")
                         .WithMany("PorudzbinaArtikli")
-                        .HasForeignKey("ArtikalId")
+                        .HasForeignKey("IdArtikla")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("OnlineShop.Models.Porudzbina", "Porudzbina")
+                    b.HasOne("OnlineShop.Models.Artikal", "Artikal")
                         .WithMany("PorudzbinaArtikli")
-                        .HasForeignKey("PorudzbinaId")
+                        .HasForeignKey("IdPorudzbine")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

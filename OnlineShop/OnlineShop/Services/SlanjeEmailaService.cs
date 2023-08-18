@@ -13,27 +13,36 @@ namespace OnlineShop.Services
         private readonly IConfiguration config;
         public SlanjeEmailaService(IConfiguration configg)
         {
-            this.config = configg;
+            this.config = config;
         }
         public async Task EmailObavestenje(string verifikovan, string email)
         {
-            string text = $"Vasa verifikacija je {verifikovan}";
-            var mail = new MimeMessage
+            try
             {
-                Subject = "Verifikacija",
-                Body = new TextPart(MimeKit.Text.TextFormat.Plain) { Text = text }
-            };
+                string text = $"Vasa verifikacija je {verifikovan}";
+                var mail = new MimeMessage
+                {
+                    Subject = "Verifikacija",
+                    Body = new TextPart(MimeKit.Text.TextFormat.Plain) { Text = text }
+                };
 
 
-            mail.From.Add(new MailboxAddress(config["MailSettings:DisplayName"], config["MailSettings:From"]));
-            mail.To.Add(MailboxAddress.Parse(email));
+                mail.From.Add(new MailboxAddress(config.GetValue<string>("MailSettings:DisplayName"), config.GetValue<string>("MailSettings:From")));
+                mail.To.Add(MailboxAddress.Parse(email));
 
-            SmtpClient smtp = new SmtpClient();
-            await smtp.ConnectAsync(config["MailSettings:Host"], int.Parse(config["MailSettings:Port"]!), SecureSocketOptions.Auto);
-            string s = config["MailSettings:From"] + " " + config["MailSettings:Password"];
-            await smtp.AuthenticateAsync(config["MailSettings:From"], config["MailSettings:Password"]);
-            await smtp.SendAsync(mail);
-            await smtp.DisconnectAsync(true);
+                SmtpClient smtp = new SmtpClient();
+                await smtp.ConnectAsync(config.GetValue<string>("MailSettings:Host"), int.Parse(config.GetValue<string>("MailSettings:Port")!), SecureSocketOptions.Auto);
+                string s = config.GetValue<string>("MailSettings:From") + " " + config.GetValue<string>("MailSettings:Password");
+                await smtp.AuthenticateAsync(config.GetValue<string>("MailSettings:From"), config.GetValue<string>("MailSettings:Password"));
+                await smtp.SendAsync(mail);
+                await smtp.DisconnectAsync(true);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine("Exception during email sending: " + ex.Message);
+                // You can also log the full exception details and stack trace for further debugging
+            }
 
         }
     }

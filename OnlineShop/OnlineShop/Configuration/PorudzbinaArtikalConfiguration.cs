@@ -14,12 +14,14 @@ namespace OnlineShop.Configuration
 
             builder.HasOne(pa => pa.Porudzbina)
                 .WithMany(pa => pa.PorudzbinaArtikli)
+                .HasForeignKey(pa => pa.IdArtikla)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
 
             builder.HasOne(pa => pa.Artikal)
                 .WithMany(pa => pa.PorudzbinaArtikli)
+                .HasForeignKey(pa => pa.IdPorudzbine)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }
