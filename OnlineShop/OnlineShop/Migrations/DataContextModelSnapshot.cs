@@ -44,7 +44,9 @@ namespace OnlineShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Obrisan")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Opis")
                         .HasColumnType("nvarchar(max)");
@@ -90,8 +92,7 @@ namespace OnlineShop.Migrations
 
                     b.Property<string>("Lozinka")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Prezime")
                         .IsRequired()
@@ -129,6 +130,9 @@ namespace OnlineShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("CenaDostave")
+                        .HasColumnType("float");
+
                     b.Property<double>("CenaPorudzbine")
                         .HasColumnType("float");
 
@@ -138,8 +142,9 @@ namespace OnlineShop.Migrations
                     b.Property<string>("Komentar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("VremeDostave")
                         .HasColumnType("datetime2");
@@ -185,7 +190,7 @@ namespace OnlineShop.Migrations
                     b.HasOne("OnlineShop.Models.Korisnik", "Korisnik")
                         .WithMany("Artikli")
                         .HasForeignKey("IdKorisnika")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Korisnik");

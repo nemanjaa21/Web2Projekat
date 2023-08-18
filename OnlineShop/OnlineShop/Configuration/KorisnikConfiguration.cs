@@ -13,7 +13,7 @@ namespace OnlineShop.Configuration
             builder.Property(k => k.KorisnickoIme).IsRequired();
             builder.HasIndex(k => k.KorisnickoIme).IsUnique();
             builder.Property(k => k.Email).IsRequired();
-            builder.Property(k => k.Lozinka).IsRequired().HasMaxLength(50);
+            builder.Property(k => k.Lozinka).IsRequired();
             builder.Property(k => k.Ime).IsRequired().HasMaxLength(50);
             builder.Property(k => k.Prezime).IsRequired().HasMaxLength(50);
             builder.Property(k => k.DatumRodjenja).IsRequired();

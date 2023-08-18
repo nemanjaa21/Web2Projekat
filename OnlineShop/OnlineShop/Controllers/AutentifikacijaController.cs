@@ -26,5 +26,13 @@ namespace OnlineShop.Controllers
                 return BadRequest();
             return Ok(token);
         }
+
+        [HttpPost("google-login")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleLogin([FromForm] string googleToken)
+        {
+            string token = await autentifikacijaSerivce.GoogleLogin(googleToken);
+            return Ok(token);
+        }
     }
 }

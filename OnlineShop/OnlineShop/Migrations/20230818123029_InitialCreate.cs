@@ -17,15 +17,15 @@ namespace OnlineShop.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipKorisnika = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     KorisnickoIme = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lozinka = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Lozinka = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Prezime = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DatumRodjenja = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SlikaKorisnika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    TipKorisnika = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Verifikovan = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -45,7 +45,7 @@ namespace OnlineShop.Migrations
                     Kolicina = table.Column<int>(type: "int", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdKorisnika = table.Column<int>(type: "int", nullable: false),
-                    Obrisan = table.Column<bool>(type: "bit", nullable: false)
+                    Obrisan = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace OnlineShop.Migrations
                         column: x => x.IdKorisnika,
                         principalTable: "Korisnici",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,8 +69,9 @@ namespace OnlineShop.Migrations
                     VremePorudzbine = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VremeDostave = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CenaPorudzbine = table.Column<double>(type: "float", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    IdKorisnika = table.Column<int>(type: "int", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdKorisnika = table.Column<int>(type: "int", nullable: false),
+                    CenaDostave = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
