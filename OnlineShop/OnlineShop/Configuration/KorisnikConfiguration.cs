@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineShop.Models;
 
 namespace OnlineShop.Configuration
@@ -19,13 +20,9 @@ namespace OnlineShop.Configuration
             builder.Property(k => k.DatumRodjenja).IsRequired();
             builder.Property(k => k.Adresa).IsRequired();
             builder.Property(k => k.TipKorisnika).HasConversion(
-                v => v.ToString(),
-                v => (TipKorisnika)Enum.Parse(typeof(TipKorisnika), v)
-                );
+                new EnumToStringConverter<TipKorisnika>());
             builder.Property(k => k.Verifikovan).HasConversion(
-                v => v.ToString(),
-                v => (Verifikovan)Enum.Parse(typeof(Verifikovan), v)
-                );
+                new EnumToStringConverter<Verifikovan>());
         }
     }
 }

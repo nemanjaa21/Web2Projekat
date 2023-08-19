@@ -47,7 +47,7 @@ namespace OnlineShop.Services
                 novaPorudzbina.CenaPorudzbine += op.KolicinaArtikla * a.CenaArtikla;
 
             }
-
+            //PROBLEMMMMMMMMMMMMMMM
             PorudzbinaDTO dto = imapper.Map<Porudzbina, PorudzbinaDTO>(await porudzbinaRepo.CreatePorudzbina(novaPorudzbina));
             return dto;
         }

@@ -2,8 +2,8 @@
 {
     public class PorudzbinaArtikalDTO
     {
-        public int Id { get; set; }
-        public int Kolicina { get; set; }
+        public int IdArtikla { get; set; }
+        public int KolicinaArtikla { get; set; }
         public ArtikalDTO Artikal { get; set; } = null!;
     }
 }

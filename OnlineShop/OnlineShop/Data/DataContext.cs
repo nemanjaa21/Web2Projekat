@@ -10,8 +10,8 @@ namespace OnlineShop.Data
             
         }
         public DbSet<Korisnik> Korisnici { get; set; }
-        public DbSet<Porudzbina> Porudzbine { get; set; }
         public DbSet<Artikal> Artikli { get; set; }
+        public DbSet<Porudzbina> Porudzbine { get; set; }
         public DbSet<PorudzbinaArtikal> PorudzbineArtikli { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

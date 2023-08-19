@@ -64,11 +64,11 @@ namespace OnlineShop.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Komentar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CenaPorudzbine = table.Column<double>(type: "float", nullable: false),
                     VremePorudzbine = table.Column<DateTime>(type: "datetime2", nullable: false),
                     VremeDostave = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CenaPorudzbine = table.Column<double>(type: "float", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdKorisnika = table.Column<int>(type: "int", nullable: false),
                     CenaDostave = table.Column<double>(type: "float", nullable: false)
@@ -96,14 +96,14 @@ namespace OnlineShop.Migrations
                 {
                     table.PrimaryKey("PK_PorudzbineArtikli", x => new { x.IdPorudzbine, x.IdArtikla });
                     table.ForeignKey(
-                        name: "FK_PorudzbineArtikli_Artikli_IdPorudzbine",
-                        column: x => x.IdPorudzbine,
+                        name: "FK_PorudzbineArtikli_Artikli_IdArtikla",
+                        column: x => x.IdArtikla,
                         principalTable: "Artikli",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_PorudzbineArtikli_Porudzbine_IdArtikla",
-                        column: x => x.IdArtikla,
+                        name: "FK_PorudzbineArtikli_Porudzbine_IdPorudzbine",
+                        column: x => x.IdPorudzbine,
                         principalTable: "Porudzbine",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);

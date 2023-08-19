@@ -11,7 +11,7 @@ namespace OnlineShop.Services
     public class SlanjeEmailaService : ISlanjeEmailaService
     {
         private readonly IConfiguration config;
-        public SlanjeEmailaService(IConfiguration configg)
+        public SlanjeEmailaService(IConfiguration config)
         {
             this.config = config;
         }
@@ -31,9 +31,9 @@ namespace OnlineShop.Services
                 mail.To.Add(MailboxAddress.Parse(email));
 
                 SmtpClient smtp = new SmtpClient();
-                await smtp.ConnectAsync(config.GetValue<string>("MailSettings:Host"), int.Parse(config.GetValue<string>("MailSettings:Port")!), SecureSocketOptions.Auto);
-                string s = config.GetValue<string>("MailSettings:From") + " " + config.GetValue<string>("MailSettings:Password");
-                await smtp.AuthenticateAsync(config.GetValue<string>("MailSettings:From"), config.GetValue<string>("MailSettings:Password"));
+                await smtp.ConnectAsync(config["MailSettings:Host"], int.Parse(config["MailSettings:Port"]!), SecureSocketOptions.Auto);
+                string s = config["MailSettings:From"] + " " + config["MailSettings:Password"];
+                await smtp.AuthenticateAsync(config["MailSettings:From"], config["MailSettings:Password"]);
                 await smtp.SendAsync(mail);
                 await smtp.DisconnectAsync(true);
             }

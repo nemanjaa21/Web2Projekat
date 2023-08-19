@@ -3,6 +3,6 @@
     public class NapraviPorudzbinuArtikalDTO
     {
         public int IdArtikla { get; set; }
-        public int Kolicina { get; set; }
+        public int KolicinaArtikla { get; set; }
     }
 }

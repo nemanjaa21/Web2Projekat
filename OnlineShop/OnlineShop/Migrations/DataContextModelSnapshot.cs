@@ -201,13 +201,13 @@ namespace OnlineShop.Migrations
 
             modelBuilder.Entity("OnlineShop.Models.PorudzbinaArtikal", b =>
                 {
-                    b.HasOne("OnlineShop.Models.Porudzbina", "Porudzbina")
+                    b.HasOne("OnlineShop.Models.Artikal", "Artikal")
                         .WithMany("PorudzbinaArtikli")
                         .HasForeignKey("IdArtikla")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("OnlineShop.Models.Artikal", "Artikal")
+                    b.HasOne("OnlineShop.Models.Porudzbina", "Porudzbina")
                         .WithMany("PorudzbinaArtikli")
                         .HasForeignKey("IdPorudzbine")
                         .OnDelete(DeleteBehavior.Restrict)

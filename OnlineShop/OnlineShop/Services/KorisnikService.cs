@@ -82,7 +82,7 @@ namespace OnlineShop.Services
             u = await korisnikRepo.PrihvatiVer(id);
             if (u != null)
             {
-                await email.EmailObavestenje(u.Email, u.Verifikovan.ToString());
+                await email.EmailObavestenje(u.Verifikovan.ToString(),u.Email);
             }
             return imapper.Map<Korisnik, KorisnikDTO>(u);
         }

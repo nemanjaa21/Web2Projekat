@@ -55,15 +55,19 @@ builder.Services.AddDbContext<DataContext>(options =>
 });
 
 builder.Services.AddScoped<IKorisnikRepository, KorisnikRepository>();
+builder.Services.AddScoped<IPorudzbinaRepository, PorudzbinaRepository>();
 builder.Services.AddScoped<IArtikalRepository, ArtikalRepository>();
-builder.Services.AddScoped<IPorudzbinaRepository,PorudzbinaRepository>();
+
 
 //
 builder.Services.AddScoped<IKorisnikService, KorisnikService>();
-builder.Services.AddScoped<ISlanjeEmailaService, SlanjeEmailaService>();
-builder.Services.AddScoped<IAutentifikacijaService, AutentifikacijaService>();
-builder.Services.AddScoped<IArtikalService, ArtikalService>();
 builder.Services.AddScoped<IPorudzbinaService, PorudzbinaService>();
+builder.Services.AddScoped<IArtikalService, ArtikalService>();
+builder.Services.AddScoped<IAutentifikacijaService, AutentifikacijaService>();
+builder.Services.AddScoped<ISlanjeEmailaService, SlanjeEmailaService>();
+
+
+
 
 var configuration = new ConfigurationBuilder()
         .SetBasePath(builder.Environment.ContentRootPath)

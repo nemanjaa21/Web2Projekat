@@ -14,10 +14,11 @@ namespace OnlineShop.Repository
         }
         public async Task<Porudzbina> CreatePorudzbina(Porudzbina poruzbina)
         {
+            dc.Porudzbine.Add(poruzbina);
             try
             {
-                dc.Porudzbine.Add(poruzbina);
-                await dc.SaveChangesAsync();
+                
+                dc.SaveChanges();
                 return poruzbina;
             }
             catch(Exception)
@@ -30,11 +31,10 @@ namespace OnlineShop.Repository
         {
             try
             {
-                List<Porudzbina> porudzbine = await dc.Porudzbine.ToListAsync();
-
+                List<Porudzbina> porudzbine = dc.Porudzbine.Include(o => o.PorudzbinaArtikli).ThenInclude(op => op.Artikal).ToList();
                 return porudzbine;
             }
-            catch(Exception)
+            catch (Exception e)
             {
                 return null;
             }
@@ -44,10 +44,10 @@ namespace OnlineShop.Repository
         {
             try
             {
-                Porudzbina p = await dc.Porudzbine.FirstOrDefaultAsync(p => p.Id == id);
-                return p;
+                Porudzbina porudzbina = dc.Porudzbine.Include(o => o.PorudzbinaArtikli).Where(o => o.Id == id).FirstOrDefault();
+                return porudzbina;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }
@@ -55,7 +55,7 @@ namespace OnlineShop.Repository
 
         public async Task SaveChanges()
         {
-            await dc.SaveChangesAsync();
+            dc.SaveChanges();
         }
     }
 }
