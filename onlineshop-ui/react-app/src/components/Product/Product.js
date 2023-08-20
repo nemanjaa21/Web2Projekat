@@ -110,7 +110,7 @@ const Product = () => {
       renderHeader: () => (
         <Button
           variant="contained"
-          color="primary"
+          color="success"
           onClick={() => handleAddProduct()}
           sx={{ m: 1 }}
         >
@@ -125,14 +125,14 @@ const Product = () => {
           <div>
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               onClick={() => handleUpdateProduct(id)}
             >
               Change
             </Button>
             <Button
               variant="contained"
-              color="secondary"
+              color="error"
               onClick={() => handleDeleteProduct(id)}
             >
               Delete
@@ -152,7 +152,7 @@ const Product = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          backgroundColor: "#243b55",
+          backgroundColor: "#8B008B",
         }}
       >
         <NewProduct open={newProductOpen} onClose={handleCloseNewProduct} />

@@ -86,7 +86,7 @@ const Checkout = ({ open, onClose }) => {
               sx={{ mt: 1 }}
               type="submit"
               variant="contained"
-              color="primary"
+              color="success"
             >
               Order
             </Button>
@@ -94,7 +94,7 @@ const Checkout = ({ open, onClose }) => {
               sx={{ ml: 2, mt: 1 }}
               onClick={onClose}
               variant="contained"
-              color="secondary"
+              color="error"
             >
               Cancel
             </Button>

@@ -300,9 +300,9 @@ const Profile = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
+          alignItems: "left",
           height: "130vh",
-          backgroundColor: "#243b55",
+          backgroundColor: "#a0a1a1",
         }}
       >
         <ThemeProvider theme={defaultTheme}>
@@ -319,7 +319,7 @@ const Profile = () => {
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5" sx={{ color: "white" }}>
+              <Typography component="h1" variant="h5" sx={{ color: "Black" }}>
                 Update profile
               </Typography>
               <Box
@@ -331,8 +331,8 @@ const Profile = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       autoComplete="given-name"
                       name="firstName"
                       required
@@ -350,8 +350,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       required
                       fullWidth
                       id="lastName"
@@ -368,8 +368,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       required
                       fullWidth
                       id="username"
@@ -386,8 +386,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       required
                       fullWidth
                       id="email"
@@ -404,8 +404,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       fullWidth
                       name="oldPassword"
                       label="Old password"
@@ -421,8 +421,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       fullWidth
                       name="password"
                       label="New password"
@@ -438,8 +438,8 @@ const Profile = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
-                      inputProps={{ style: { color: "white" } }}
-                      InputLabelProps={{ style: { color: "white" } }}
+                      inputProps={{ style: { color: "Black" } }}
+                      InputLabelProps={{ style: { color: "Black" } }}
                       required
                       fullWidth
                       id="address"
@@ -457,7 +457,7 @@ const Profile = () => {
                   <Grid item xs={12} sm={6}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                       <DatePicker
-                        sx={{ backgroundColor: "white" }}
+                        sx={{ backgroundColor: "gray" }}
                         required
                         fullWidth
                         name="birthdate"
@@ -483,6 +483,7 @@ const Profile = () => {
                 <Button
                   type="submit"
                   fullWidth
+                  color="success"
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                 >

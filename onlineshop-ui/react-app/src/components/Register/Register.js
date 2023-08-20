@@ -277,9 +277,9 @@ const Register = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "left",
         height: "130vh",
-        backgroundColor: "#243b55",
+        backgroundColor: "#a0a1a1",
       }}
     >
       <ThemeProvider theme={defaultTheme}>
@@ -290,13 +290,13 @@ const Register = () => {
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "left",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ color: "white" }}>
+            <Typography component="h1" variant="h5" sx={{ color: "Black" }}>
               Register
             </Typography>
             <Box
@@ -308,8 +308,8 @@ const Register = () => {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     autoComplete="given-name"
                     name="firstName"
                     required
@@ -326,8 +326,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     id="lastName"
@@ -343,8 +343,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     id="username"
@@ -360,8 +360,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     id="email"
@@ -377,8 +377,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     name="password"
@@ -395,8 +395,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     name="repeatPassword"
@@ -413,8 +413,8 @@ const Register = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
+                    inputProps={{ style: { color: "Black" } }}
+                    InputLabelProps={{ style: { color: "Black" } }}
                     required
                     fullWidth
                     id="address"
@@ -431,7 +431,7 @@ const Register = () => {
                 <Grid item xs={12} sm={6}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
-                      sx={{ backgroundColor: "white" }}
+                      sx={{ backgroundColor: "gray" }}
                       required
                       fullWidth
                       name="birthdate"
@@ -455,14 +455,14 @@ const Register = () => {
                       defaultValue="CUSTOMER"
                     >
                       <FormControlLabel
-                        sx={{ color: "white" }}
+                        sx={{ color: "Black" }}
                         value="CUSTOMER"
                         control={<Radio />}
                         label="Customer"
                         onChange={() => setData({ ...data, Type: "CUSTOMER" })}
                       />
                       <FormControlLabel
-                        sx={{ color: "white" }}
+                        sx={{ color: "Black" }}
                         value="SALESMAN"
                         control={<Radio />}
                         label="Salesman"
@@ -484,9 +484,10 @@ const Register = () => {
               </Grid>
               <Button
                 type="submit"
+                color="success"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 5, mb: 10 }}
               >
                 Register
               </Button>

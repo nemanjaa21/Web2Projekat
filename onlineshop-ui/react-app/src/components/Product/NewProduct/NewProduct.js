@@ -86,7 +86,7 @@ const NewProduct = ({ open, onClose }) => {
           <Box
             noValidate
             sx={{
-              backgroundColor: "#243b55",
+              backgroundColor: "#8B008B",
               display: "flex",
               marginLeft: "40%",
               width: 350,
@@ -197,7 +197,7 @@ const NewProduct = ({ open, onClose }) => {
                 sx={{ mt: 1 }}
                 type="submit"
                 variant="contained"
-                color="primary"
+                color="success"
               >
                 Add
               </Button>
@@ -205,7 +205,7 @@ const NewProduct = ({ open, onClose }) => {
                 sx={{ ml: 2, mt: 1 }}
                 onClick={onClose}
                 variant="contained"
-                color="secondary"
+                color="error"
               >
                 Cancel
               </Button>

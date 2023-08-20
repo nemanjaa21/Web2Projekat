@@ -91,7 +91,7 @@ const Shop = () => {
           <div>
             <Button
               variant="contained"
-              color="primary"
+              color="success"
               onClick={() => handleAddProduct(id, name, price)}
             >
               Add to cart
@@ -110,7 +110,7 @@ const Shop = () => {
       renderHeader: () => (
         <Button
           variant="contained"
-          color="primary"
+          color="success"
           onClick={() => openCartHandler()}
           sx={{ m: 1 }}
         >
@@ -129,7 +129,7 @@ const Shop = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          backgroundColor: "#243b55",
+          backgroundColor: "#8B008B",
         }}
       >
         <DataGrid

@@ -48,44 +48,48 @@ const Dashboard = () => {
       {isAdmin && (
         <Box
           sx={{
-            display: "flex",
+            display: "grid",
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
-            backgroundColor: "#243b55",
+            backgroundColor: "#a0a1a1",
           }}
         >
-          <Box sx={{ m: 2 }}>
+          <Box sx={{ m: 1 }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
-                padding: "10px 20px",
+                padding: "10px 10px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
               startIcon={
+
                 <AccountCircle
-                  sx={{ fontSize: "40px", width: "40px", height: "40px" }}
+                  sx={{ fontSize: "30px", height: "25px", width: "30px" }}
+
                 />
               }
-              size="large"
+              size="medium"
               color="primary"
               onClick={profileHandler}
             >
               Profile
             </Button>
           </Box>
-          <Box sx={{ m: 2 }}>
+          <Box sx={{ m: 1 }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
                 padding: "10px 20px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -101,14 +105,15 @@ const Dashboard = () => {
               Verification
             </Button>
           </Box>
-          <Box sx={{ m: 2 }}>
+          <Box sx={{ m: 1 }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
                 padding: "10px 20px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -130,21 +135,22 @@ const Dashboard = () => {
       {isCustomer && (
         <Box
           sx={{
-            display: "flex",
+            display: "grid",
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
-            backgroundColor: "#243b55",
+            backgroundColor: "#a0a1a1",
           }}
         >
-          <Box sx={{ m: 2 }}>
+          <Box sx={{ m: 1 }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
                 padding: "20px 30px",
+                backgroundColor:"#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -160,14 +166,15 @@ const Dashboard = () => {
               Profile
             </Button>
           </Box>
-          <Box sx={{ m: 2, backgroundColor: "#243b55" }}>
+          <Box sx={{ m: 1, backgroundColor: "#8B008B" }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
                 padding: "20px 30px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -183,14 +190,15 @@ const Dashboard = () => {
               Orders
             </Button>
           </Box>
-          <Box sx={{ m: 2, backgroundColor: "#243b55" }}>
+          <Box sx={{ m: 1, backgroundColor: "#8B008B" }}>
             <Button
               sx={{
                 color: "#141e30",
                 fontSize: "40px",
                 padding: "20px 30px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -212,11 +220,11 @@ const Dashboard = () => {
       {isSalesman && (
         <Box
           sx={{
-            display: "flex",
+            display: "grid",
             justifyContent: "center",
             alignItems: "center",
             height: "100vh",
-            backgroundColor: "#243b55",
+            backgroundColor: "#a0a1a1",
           }}
         >
           <Box sx={{ m: 2 }}>
@@ -225,8 +233,9 @@ const Dashboard = () => {
                 color: "#141e30",
                 fontSize: "30px",
                 padding: "20px 30px",
+                backgroundColor: "#8B008B",
                 "&:hover": {
-                  backgroundColor: "#03e9f4",
+                  backgroundColor: "#8B008B",
                 },
               }}
               variant="contained"
@@ -244,14 +253,15 @@ const Dashboard = () => {
           </Box>
           {isVerified && (
             <>
-              <Box sx={{ m: 2, backgroundColor: "#243b55" }}>
+              <Box sx={{ m: 2, backgroundColor: "#8B008B" }}>
                 <Button
                   sx={{
                     color: "#141e30",
                     fontSize: "30px",
                     padding: "20px 30px",
+                    backgroundColor : "#8B008B",
                     "&:hover": {
-                      backgroundColor: "#03e9f4",
+                      backgroundColor: "#8B008B",
                     },
                   }}
                   variant="contained"
@@ -267,14 +277,15 @@ const Dashboard = () => {
                   Products
                 </Button>
               </Box>
-              <Box sx={{ m: 2, backgroundColor: "#243b55" }}>
+              <Box sx={{ m: 2, backgroundColor: "#8B008B" }}>
                 <Button
                   sx={{
                     color: "#141e30",
                     fontSize: "30px",
                     padding: "20px 30px",
+                    backgroundColor: "#8B008B",
                     "&:hover": {
-                      backgroundColor: "#03e9f4",
+                      backgroundColor: "#8B008B",
                     },
                   }}
                   variant="contained"

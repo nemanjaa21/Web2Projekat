@@ -239,7 +239,7 @@ const Orders = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          backgroundColor: "#243b55",
+          backgroundColor: "#8B008B",
         }}
       >
         <div
@@ -250,7 +250,7 @@ const Orders = () => {
             backgroundColor: "blue",
           }}
         >
-          <TableContainer component={Paper} style={{ background: "#243b55" }}>
+          <TableContainer component={Paper} style={{ background: "#8B008B" }}>
             <Table aria-label="collapsible table">
               <TableHead>
                 <TableRow>

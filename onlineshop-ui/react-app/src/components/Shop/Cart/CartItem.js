@@ -17,7 +17,7 @@ const CartItem = (props) => {
         <Button
           sx={{ ml: 2, mt: 1 }}
           variant="contained"
-          color="primary"
+          color="success"
           onClick={props.onAdd}
         >
           +
@@ -25,7 +25,7 @@ const CartItem = (props) => {
         <Button
           sx={{ ml: 2, mt: 1 }}
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={props.onRemove}
         >
           -

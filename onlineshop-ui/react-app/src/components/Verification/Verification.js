@@ -87,14 +87,14 @@ const Verification = () => {
             <div>
               <Button
                 variant="contained"
-                color="primary"
+                color="success"
                 onClick={() => handleAcceptVerification(id)}
               >
                 ACCEPT
               </Button>
               <Button
                 variant="contained"
-                color="secondary"
+                color="error"
                 onClick={() => handleDenyVerification(id)}
               >
                 DENY
@@ -133,7 +133,7 @@ const Verification = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          backgroundColor: "#243b55",
+          backgroundColor: "#8B008B",
         }}
       >
         <DataGrid

@@ -18,9 +18,14 @@ import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 
 const isNotEmpty = (value) => value.trim() !== "";
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
+
 const Login = () => {
+
+
   const navigate = useNavigate();
   const defaultTheme = createTheme();
 
@@ -33,9 +38,14 @@ const Login = () => {
     password: true,
   });
 
+
+
   const authCtx = useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
+
+
 
   const emailBlurHandler = () => {
     const enteredEmail = data.Email;
@@ -52,6 +62,9 @@ const Login = () => {
     }
   };
 
+
+
+
   const passwordBlurHandler = () => {
     const enteredPassword = data.Password;
     if (isNotEmpty(enteredPassword)) {
@@ -67,6 +80,9 @@ const Login = () => {
     }
   };
 
+
+
+
   const submitHandler = (event) => {
     event.preventDefault();
 
@@ -76,11 +92,15 @@ const Login = () => {
     });
   };
 
+
+
   const googleLoginHandler = (response) => {
     let data = new FormData();
     data.append("googleToken", response.credential);
     authCtx.googleLogin(data);
   };
+
+
 
   const googleLoginErrorHandler = () => {
     toast.error("Google login error", {
@@ -91,6 +111,9 @@ const Login = () => {
     });
   };
 
+
+
+  
   return (
     <Box
       sx={{
@@ -98,7 +121,7 @@ const Login = () => {
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundColor: "#243b55",
+        backgroundColor: "#a0a1a1",
       }}
     >
       <ThemeProvider theme={defaultTheme}>
@@ -109,13 +132,13 @@ const Login = () => {
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "left",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5" sx={{ color: "white" }}>
+            <Typography component="h1" variant="h5" sx={{ color: "Black" }}>
               Login
             </Typography>
             <Box
@@ -125,8 +148,8 @@ const Login = () => {
               sx={{ mt: 1 }}
             >
               <TextField
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
+                inputProps={{ style: { color: "Black" } }}
+                InputLabelProps={{ style: { color: "Black" } }}
                 margin="normal"
                 required
                 fullWidth
@@ -140,8 +163,8 @@ const Login = () => {
                 onChange={(e) => setData({ ...data, Email: e.target.value })}
               />
               <TextField
-                inputProps={{ style: { color: "white" } }}
-                InputLabelProps={{ style: { color: "white" } }}
+                inputProps={{ style: { color: "Black" } }}
+                InputLabelProps={{ style: { color: "Black" } }}
                 margin="normal"
                 required
                 fullWidth
@@ -157,6 +180,7 @@ const Login = () => {
               <Button
                 type="submit"
                 fullWidth
+                color="success"
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >

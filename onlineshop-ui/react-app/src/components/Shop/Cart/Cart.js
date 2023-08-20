@@ -95,7 +95,7 @@ const Cart = ({ open, onClose }) => {
             <Button
               sx={{ ml: 2, mt: 1 }}
               variant="contained"
-              color="primary"
+              color="success"
               onClick={openCheckoutHandler}
             >
               Order
@@ -104,7 +104,7 @@ const Cart = ({ open, onClose }) => {
           <Button
             sx={{ ml: 2, mt: 1 }}
             variant="contained"
-            color="secondary"
+            color="error"
             onClick={onClose}
           >
             Close

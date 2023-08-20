@@ -21,7 +21,7 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }} >
-      <AppBar position="static" sx={{backgroundColor: '#141e30'}}>
+      <AppBar position="static" sx={{backgroundColor: '#a0a1a1'}}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Button color='inherit' onClick={handleHomeClick}>Home</Button>
           <Button color="inherit" onClick={handleLogoutClick}>Logout</Button>
