@@ -25,7 +25,7 @@ const defaultTheme = createTheme();
 
 const isNotEmpty = (value) => value.trim() !== "";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const exceptionRead = (value) => value.split(":")[1].split("at")[0];
+//const exceptionRead = (value) => value.split(":")[1].split("at")[0];
 
 const Register = () => {
   const navigate = useNavigate();
@@ -239,10 +239,11 @@ const Register = () => {
       return;
     }
 
-    const dataForm = new FormData(event.currentTarget);
+    // //const dataForm = new FormData(event.currentTarget);
 
     const date = new Date(localDate.toString()).toISOString();
-    setData({ ...data, BirthDate: date });
+    console.log(data);
+    
 
     const formData = new FormData();
     formData.append("Username", data.Username);
@@ -251,19 +252,21 @@ const Register = () => {
     formData.append("RepeatPassword", data.RepeatPassword);
     formData.append("FirstName", data.FirstName);
     formData.append("LastName", data.LastName);
-    formData.append("BirthDate", data.BirthDate);
+    formData.append("BirthDate", date);
     formData.append("Address", data.Address);
-    formData.append("ImageForm", data.ImageForm);
     formData.append("Type", data.Type);
+    formData.append("ImageForm", data.ImageForm);
+    
 
     const registerFunction = async () => {
       try {
+       
         const response = await register(formData);
-        console.log(response.data);
+        
         alert("Success registration!");
         navigate("/");
       } catch (error) {
-        if (error.response) alert(exceptionRead(error.response.data));
+        if (error.response) alert(error.response.data);
       }
     };
     registerFunction();
@@ -456,14 +459,14 @@ const Register = () => {
                         value="CUSTOMER"
                         control={<Radio />}
                         label="Customer"
-                        onChange={() => setData({ ...data, type: "CUSTOMER" })}
+                        onChange={() => setData({ ...data, Type: "CUSTOMER" })}
                       />
                       <FormControlLabel
                         sx={{ color: "white" }}
                         value="SALESMAN"
                         control={<Radio />}
                         label="Salesman"
-                        onChange={() => setData({ ...data, type: "SALESMAN" })}
+                        onChange={() => setData({ ...data, Type: "SALESMAN" })}
                       />
                     </RadioGroup>
                   </FormControl>

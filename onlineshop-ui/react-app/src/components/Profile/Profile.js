@@ -19,7 +19,7 @@ import dayjs from "dayjs";
 
 const isNotEmpty = (value) => value.trim() !== "";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const exceptionRead = (value) => value.split(":")[1].split("at")[0];
+//const exceptionRead = (value) => value.split(":")[1].split("at")[0];
 const defaultTheme = createTheme();
 
 const Profile = () => {
@@ -112,7 +112,7 @@ const Profile = () => {
           Address: response.data.address,
         });
       } catch (error) {
-        if (error.response) alert(exceptionRead(error.response.data));
+        if (error.response) alert(error.response.data);
         return;
       }
     };
@@ -271,7 +271,7 @@ const Profile = () => {
     }
 
     const date = new Date(localDate.toString());
-    setData({ ...data, BirthDate: localDate.toString() });
+    
 
     const formData = new FormData();
     formData.append("Username", data.Username);
@@ -286,9 +286,10 @@ const Profile = () => {
 
     try {
       const response = await update(formData);
+      console.log(formData);
       alert("You updated yours profile settings!");
     } catch (error) {
-      if (error) alert(exceptionRead(error.response.data));
+      if (error) alert(error.response.data);
     }
   };
 

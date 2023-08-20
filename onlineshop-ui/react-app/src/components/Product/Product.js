@@ -16,7 +16,7 @@ import {
 import UpdateProduct from "./UpdateProduct/UpdateProduct.js";
 
 const Product = () => {
-  const exceptionRead = (value) => value.split(":")[1].split("at")[0];
+  //const exceptionRead = (value) => value.split(":")[1].split("at")[0];
   const [newProductOpen, setNewProductOpen] = useState(false);
   const [updateProductOpen, setUpdateProductOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -32,7 +32,7 @@ const Product = () => {
         const response = await getMyProducts();
         setProducts(response.data);
       } catch (error) {
-       if (error) alert(exceptionRead(error.response.data));
+       if (error) alert(error.response.data);
         return;
       }
     };
@@ -56,7 +56,7 @@ const Product = () => {
         const response = await getProductById(id);
         setSelectedProduct(response.data);
       } catch (error) {
-        if (error) alert(exceptionRead(error.response.data));
+        if (error) alert(error.response.data);
         return;
       }
     };
@@ -73,7 +73,7 @@ const Product = () => {
       const response = await deleteProduct(id);
       setChange(!change);
     } catch (error) {
-      if (error) alert(exceptionRead(error.response.data));
+      if (error) alert(error.response.data);
       return;
     }
   };
