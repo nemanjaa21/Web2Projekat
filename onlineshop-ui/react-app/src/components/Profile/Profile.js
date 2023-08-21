@@ -280,13 +280,14 @@ const Profile = () => {
     formData.append("PasswordUpdate", data.Password);
     formData.append("FirstName", data.FirstName);
     formData.append("LastName", data.LastName);
-    formData.append("BirthDate", localDate.toString());
+    formData.append("BirthDate", date.toISOString());
     formData.append("Address", data.Address);
     formData.append("ImageForm", data.ImageForm);
+    console.log("Profile", formData);
 
     try {
       const response = await update(formData);
-      console.log(formData);
+    
       alert("You updated yours profile settings!");
     } catch (error) {
       if (error) alert(error.response.data);

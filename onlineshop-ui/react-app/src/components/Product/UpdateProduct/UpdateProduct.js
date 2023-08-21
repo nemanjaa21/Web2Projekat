@@ -13,7 +13,7 @@ import {
 } from "../../../services/ProductService";
 
 const UpdateProduct = ({ open, onClose, product }) => {
-  console.log("ovaj ispis", product);
+  
   const exceptionRead = (value) => value.split(":")[1].split("at")[0];
   const [data, setData] = useState({
     Name: product.name,
@@ -51,7 +51,7 @@ const UpdateProduct = ({ open, onClose, product }) => {
       return;
     }
     const file = event.target.files[0];
-    console.log(file);
+    
     const reader = new FileReader();
     if (file) {
       reader.readAsDataURL(file);

@@ -193,7 +193,7 @@ namespace Online_Shop.Service
 
                 }
             }
-
+            user.BirthDate = user.BirthDate.Date;
             UserDto dto = imapper.Map<User, UserDto>(await userRepo.UpdateProfile(user));
 
             return dto;
